@@ -47,7 +47,11 @@ export function duracion(inicio, fin) {
   inicio = Number(inicio);
   fin = Number(fin);
   // TODO: resta inicio a fin.
-  return undefined;
+  if (0 <= inicio && fin <= 1440) {
+    return fin - inicio
+  }
+
+  return "Parametros no validos";
 }
 
 // 2. Devuelve un booleano: ambos enteros y 0 <= inicio < fin <= 1440.
@@ -56,7 +60,11 @@ export function horarioValido(inicio, fin) {
   inicio = Number(inicio);
   fin = Number(fin);
   // TODO: combina Number.isInteger y comparaciones con &&.
-  return undefined;
+  if (Number.isInteger(inicio) && Number.isInteger(fin) && 0 <= inicio && fin <= 1440){
+    return true
+  }
+
+  return false;
 }
 
 // 3. Recibe un array de géneros y el texto buscado. Cuenta coincidencias exactas.
@@ -64,7 +72,14 @@ export function horarioValido(inicio, fin) {
 // contarPorGenero([], 'indie') → 0. Debe funcionar con cualquier longitud.
 export function contarPorGenero(generos, buscado) {
   // TODO: empieza un contador en 0, recorre generos con for y compara cada valor.
-  return undefined;
+    let n = 0
+        for (const genero of generos) {
+            if (genero === buscado) {
+                n++;
+            }
+        }
+
+    return n;
 }
 
 // 4. Recibe un array de duraciones no negativas, en minutos, como textos.
@@ -73,7 +88,11 @@ export function contarPorGenero(generos, buscado) {
 export function minutosTotales(duraciones) {
   // TODO: empieza un acumulador en 0 y recorre duraciones con for.
   // Convierte cada valor con Number(duraciones[i]) antes de sumarlo.
-  return undefined;
+  let d = 0
+  for (duracion of duraciones){
+    d += Number(duracion);
+  }
+  return d;
 }
 
 // 5. Dos textos: nombre de artista y consulta.
@@ -81,35 +100,59 @@ export function minutosTotales(duraciones) {
 // coincideTexto('Bruma Solar', ' BRUMA ') → true.
 export function coincideTexto(artista, texto) {
   // TODO: usa trim(), toLowerCase() e includes(). Devuelve un booleano.
-  return undefined;
+  if (artista.trim().toLowerCase().includes(texto.trim().toLowerCase())) { return true }
+
+  return false;
 }
 
 // 6. Dos códigos de escenario. Devuelve un booleano.
 // coincideEscenario('rio', 'rio') → true; ('rio', 'bosque') → false.
 export function coincideEscenario(escenario, buscado) {
   // TODO: compara los parámetros con igualdad estricta (===).
-  return undefined;
+  if (escenario.trim().toLowerCase() === buscado.trim().toLowerCase()) { return true }
+  return false;
 }
 
 // 7. Convertir minutos a hora.
 // Convierte minutos enteros entre 0 y 1440 al formato HH:MM. Casos: 635 → 10:35; 0 → 00:00; 1440 → 24:00. Para valores inválidos devuelve 'Dato no válido'.
 export function hora(minutos) {
   // TODO: Usa Number, Number.isInteger, Math.floor, el resto (%) y padStart.
-  return undefined;
+  const n = Number(minutos);
+
+    if (Number.isInteger(n) && n >= 0 && n <= 1440) {
+      const horas = String(Math.floor(n / 60)).padStart(2, "0");
+      const mins = String(n % 60).padStart(2, "0");
+      return `${horas}:${mins}`;
+    } else {
+      return false;
+    }
 }
 
 // 8. Aplicar un descuento.
 // Devuelve el precio final como número con un máximo de dos decimales. Precio no negativo y porcentaje entre 0 y 100, ambos finitos. Rechaza campos vacíos. Casos: 20 y 15 → 17; 19.99 y 10 → 17.99; -1 o 120 % → 'Dato no válido'.
 export function aplicarDescuento(precio, porcentaje) {
   // TODO: Valida antes de operar. toFixed devuelve texto; convierte de nuevo con Number.
-  return undefined;
+  const pre = Number(precio);
+  const por = Number(porcentaje);
+  if (!Number.isNaN(pre) && !Number.isNaN(por) && por > 0 && por <= 100 && pre > 0) {
+    const precioFinal = pre * ((100 - por) / 100);
+    return Number(precioFinal.toFixed(2));
+  }
+
+  return "Datos no validos";
 }
 
 // 9. Encontrar la mayor duración.
 // Devuelve la mayor duración numérica sin modificar el array. Casos: 45;90;60 → 90; 60;60 → 60; lista vacía → null. Los elementos serán duraciones válidas no negativas.
 export function mayorDuracion(duraciones) {
   // TODO: Recorre el array y conserva el máximo. Convierte cada elemento con Number.
-  return undefined;
+  let lista = Number(duraciones)
+  if (lista.lenght === 0) { return null }
+  lista.sort()
+  return lista[0]
+
+
+
 }
 
 // 10. Eliminar géneros repetidos.
